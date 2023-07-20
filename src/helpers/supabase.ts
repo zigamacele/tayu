@@ -1,4 +1,5 @@
 import supabase from '../config/supabaseClient'
+import { Gacha } from '../types/global'
 import { getCurrentTable } from '../utils/timeDate'
 
 export const getGachaGames = async () => {
@@ -9,9 +10,10 @@ export const getGachaGames = async () => {
   return data
 }
 
-// FIX TYPE
-export const inputMonthlyStatistics = async (data: any) => {
-  const { error } = await supabase.from(getCurrentTable()).insert([...data])
+export const inputMonthlyStatistics = async (data: Gacha[]) => {
+  const { error } = await supabase
+    .from(getCurrentTable())
+    .upsert(data, { onConflict: 'id' })
 
   if (error) console.log(error)
 }

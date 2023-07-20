@@ -4,7 +4,7 @@ import { formatStats } from '../utils/statistics'
 import { Gacha } from '../types/global'
 
 export const getMonthlyStatistics = async (name: string, id: number) => {
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({ headless: 'new' })
   const page = await browser.newPage()
 
   process.env && (await page.goto(config.website['URL']))
