@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv'
 import puppeteer from 'puppeteer'
 dotenv.config()
+import config from './config/envVariables'
 
 type Gacha = {
   name?: string
@@ -13,7 +14,7 @@ const find = async () => {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
 
-  process.env && (await page.goto(process.env['WEBSITE_URL'] ?? ''))
+  process.env && (await page.goto(config.website['URL']))
 
   await page.setViewport({
     width: 640,

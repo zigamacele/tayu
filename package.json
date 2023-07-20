@@ -4,7 +4,7 @@
   "author": "Ziga Macele",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --watch src/**/*.ts --exec ts-node ./src/app.ts",
+    "dev": "nodemon --watch src/app.ts --exec ts-node ./src/app.ts",
     "build": "tsc",
     "start": "node ./dist/app.js",
     "lint": "eslint --fix --quiet src/**/*.ts",
@@ -14,6 +14,7 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.26.0",
     "dotenv": "^16.3.1",
     "puppeteer": "^20.8.3"
   },
