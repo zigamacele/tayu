@@ -20,3 +20,21 @@ export const inputMonthlyStatistics = async (data: Gacha[]) => {
 
   if (error) console.log(error)
 }
+
+export const checkMonthlyTablePerms = async () => {
+  const testData = {
+    id: 1,
+    totalRevenue: 1,
+    androidRevenue: 1,
+    iosRevenue: 1,
+    totalDownloads: 1,
+    androidDownloads: 1,
+    iosDownloads: 1,
+  }
+
+  const { error } = await supabase
+    .from(getCurrentTable())
+    .upsert(testData, { onConflict: 'id' })
+
+  console.log('CURRENT TABLE ERROR:', error)
+}

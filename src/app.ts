@@ -1,10 +1,15 @@
-import { getGachaGames, inputMonthlyStatistics } from './helpers/supabase'
+import {
+  checkMonthlyTablePerms,
+  getGachaGames,
+  inputMonthlyStatistics,
+} from './helpers/supabase'
 import { getMonthlyStatistics } from './logic/pupppet'
 import { Gacha } from './types/global'
 import { getCurrentTable } from './utils/timeDate'
 
 const startGatheringInformation = async () => {
   const data = await getGachaGames()
+  checkMonthlyTablePerms()
   const updateEveryXMinutes = 1
 
   const gatheredInformation: Gacha[] = []
