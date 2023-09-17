@@ -3,7 +3,12 @@ import config from '../config/envVariables'
 import { formatStats } from '../utils/statistics'
 import { Gacha } from '../types/global'
 
-export const getMonthlyStatistics = async (name: string, id: number) => {
+export const getMonthlyStatistics = async (
+  name: string,
+  id: number,
+  same_name: boolean,
+  slot: number[] | null,
+) => {
   const browser = await puppeteer.launch({ headless: 'new' })
   const page = await browser.newPage()
 
@@ -31,7 +36,10 @@ export const getMonthlyStatistics = async (name: string, id: number) => {
     iosDownloads: 0,
   }
 
-  for (let i = 0; i < 2; i++) {
+  const diffRegionSameName = same_name ? 4 : 2
+  for (let i = 0; i < diffRegionSameName; i++) {
+    if (same_name && slot && !slot.includes(i)) continue
+
     const element = elements[i]
 
     const isRevenueForAndroid = await element?.$$eval(

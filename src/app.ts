@@ -10,7 +10,7 @@ import { getCurrentTable } from './utils/timeDate'
 const startGatheringInformation = async () => {
   const data = await getGachaGames()
   checkMonthlyTablePerms()
-  const updateEveryXMinutes = 1
+  const updateEveryXMinutes = 0.5
 
   const gatheredInformation: Gacha[] = []
 
@@ -20,7 +20,12 @@ const startGatheringInformation = async () => {
     for (const [index, game] of data.entries()) {
       setTimeout(
         async () => {
-          const monthlyStats = await getMonthlyStatistics(game.name, game.id)
+          const monthlyStats = await getMonthlyStatistics(
+            game.name,
+            game.id,
+            game.same_name,
+            game.same_slot,
+          )
           gatheredInformation.push(monthlyStats)
 
           if (index + 1 === data.length) {
