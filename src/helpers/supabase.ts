@@ -7,6 +7,7 @@ export const getGachaGames = async () => {
   const { data, error } = await supabase
     .from(config.database.GAMES_TABLE)
     .select('*')
+    .neq('eos', true)
     .order('id', { ascending: true })
 
   if (error) console.log(error)
