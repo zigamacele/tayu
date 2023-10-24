@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+
 import config from './envVariables'
 
 const supabase = createClient(

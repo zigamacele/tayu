@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: { browser: true, es2020: true },
   extends: [
     'eslint:recommended',
@@ -6,8 +7,14 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:prettier/recommended',
   ],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json'],
+    // tsconfigRootDir: __dirname,
+  },
   plugins: ['@typescript-eslint', 'prettier', 'simple-import-sort'],
   rules: {
     '@typescript-eslint/no-floating-promises': 'error',
