@@ -37,7 +37,8 @@ export const getMonthlyStatistics = async (
     iosDownloads: 0,
   }
 
-  const diffRegionSameName = same_name ? 4 : 2
+  // TODO this needs to be reworked
+  const diffRegionSameName = same_name ? 6 : 2
   for (let i = 0; i < diffRegionSameName; i++) {
     if (same_name && slot && !slot.includes(i)) continue
 

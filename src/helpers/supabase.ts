@@ -15,6 +15,7 @@ export const getGachaGames = async () => {
   return data
 }
 
+//TODO lol.. who named this function
 export const inputMonthlyStatistics = async (data: Gacha[]) => {
   const { error } = await supabase
     .from(getCurrentTable())
