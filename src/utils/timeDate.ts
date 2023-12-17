@@ -1,9 +1,11 @@
-import dayjs from 'dayjs'
-
 export const getCurrentTable = () => {
-  if (!dayjs().month()) {
-    return `11-${dayjs().year() - 1}`
+  const currentDate = new Date()
+  const previousMonth = currentDate.getMonth()
+  const currentYear = currentDate.getFullYear()
+
+  if (!previousMonth) {
+    return `12-${currentYear - 1}`
   }
 
-  return `${dayjs().month()}-${dayjs().year()}`
+  return `${previousMonth}-${currentYear}`
 }
