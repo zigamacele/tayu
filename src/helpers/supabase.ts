@@ -1,6 +1,6 @@
 import config from '../config/envVariables'
 import supabase from '../config/supabaseClient'
-import { Gacha } from '../types/supabase'
+import { Gacha, GameSchema } from '../types/supabase'
 import { getCurrentTable } from '../utils/timeDate'
 
 export const getGachaGames = async () => {
@@ -12,21 +12,23 @@ export const getGachaGames = async () => {
 
   if (error) console.log(error)
 
-  return data
+  return data as GameSchema[] | undefined
 }
 
-//TODO lol.. who named this function
+// TODO lol.. who named this function
 export const inputMonthlyStatistics = async (data: Gacha[]) => {
   const { error } = await supabase
     .from(getCurrentTable())
     .upsert(data, { onConflict: 'id' })
 
-  if (error) console.log(error)
+  if (error) console.error('ERROR: ', error)
 }
 
-export const checkMonthlyTablePerms = async () => {
+export const checkTablePerms = async (currentTable: boolean, table: string) => {
+  const tableToTest = currentTable ? getCurrentTable() : table
+
   const testData = {
-    id: 1,
+    id: 9999,
     totalRevenue: 1,
     androidRevenue: 1,
     iosRevenue: 1,
@@ -35,9 +37,15 @@ export const checkMonthlyTablePerms = async () => {
     iosDownloads: 1,
   }
 
-  const { error } = await supabase
-    .from(getCurrentTable())
+  const { error: errorUpsert } = await supabase
+    .from(tableToTest)
     .upsert(testData, { onConflict: 'id' })
 
-  console.log('CURRENT TABLE ERROR:', error)
+  const { error: errorDelete } = await supabase
+    .from(tableToTest)
+    .delete()
+    .eq('id', testData.id)
+
+  console.log('ERROR AT UPSERT: ', errorUpsert)
+  console.log('ERROR AT DELETE: ', errorDelete)
 }
