@@ -28,7 +28,7 @@ export const checkTablePerms = async (currentTable: boolean, table: string) => {
   const tableToTest = currentTable ? getCurrentTable() : table
 
   const testData = {
-    id: 9999,
+    id: 1, // Genshin Impact
     totalRevenue: 1,
     androidRevenue: 1,
     iosRevenue: 1,

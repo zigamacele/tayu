@@ -9,7 +9,7 @@ export const formatStats = (stat: string) => {
   }
 }
 
-export const greenTextParenthesis = (text?: string) => {
+export const greenTextParenthesis = (text?: string | number) => {
   if (!text) return ''
 
   return green(`(${text})`)
