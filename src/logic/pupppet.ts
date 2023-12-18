@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer'
 
 import config from '../config/envVariables'
-import { Gacha } from '../types/global'
+import { Gacha } from '../types/supabase'
 import { formatStats } from '../utils/format'
 
 export const getMonthlyStatistics = async (

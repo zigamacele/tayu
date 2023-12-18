@@ -1,6 +1,6 @@
 import config from '../config/envVariables'
 import supabase from '../config/supabaseClient'
-import { Gacha } from '../types/global'
+import { Gacha } from '../types/supabase'
 import { getCurrentTable } from '../utils/timeDate'
 
 export const getGachaGames = async () => {
