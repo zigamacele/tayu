@@ -1,6 +1,6 @@
 export interface Answers {
   mode: 'full' | 'partial'
-  partial?: string
+  partial: string
   timeout: number
   table: string
   perms: boolean

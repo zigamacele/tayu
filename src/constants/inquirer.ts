@@ -2,9 +2,11 @@ import { Answers } from '../types/inquirer'
 import { greenTextParenthesis } from '../utils/format'
 import { getCurrentTable } from '../utils/timeDate'
 
+export const DEFAULT_TIMEOUT = 0.5
+
 const timeoutChoices = [
   { name: '0.25 min', value: 0.25 },
-  { name: '0.5 min', value: 0.5 },
+  { name: '0.5 min', value: DEFAULT_TIMEOUT },
   { name: '1 min', value: 1 },
 ]
 
