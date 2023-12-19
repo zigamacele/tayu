@@ -2,18 +2,21 @@ import { DEFAULT_TIMEOUT } from '../constants/inquirer'
 import {
   checkTablePerms,
   getGachaGames,
-  inputMonthlyStatistics,
+  upsertMonthlyTable,
 } from '../helpers/supabase'
 import { green, red } from '../styles/chalk'
 import { Answers } from '../types/inquirer'
 import { Gacha, GameSchema } from '../types/supabase'
+import { getCurrentTable } from '../utils/timeDate'
 import { getSessionConfig } from './inquirer'
 import { getMonthlyStatistics } from './pupppet'
 
 export const startGatheringInformation = async () => {
   const data = await getGachaGames()
-  const { mode, partial, timeout, table, perms, defaultTimeout, currentTable } =
+  const { mode, partial, timeout, table, perms, defaultTimeout } =
     (await getSessionConfig()) as unknown as Answers
+
+  const tableToUpsert = table ?? getCurrentTable()
 
   let dataArray: GameSchema[] = []
 
@@ -32,7 +35,7 @@ export const startGatheringInformation = async () => {
   }
 
   if (perms) {
-    await checkTablePerms(currentTable, table)
+    await checkTablePerms(tableToUpsert)
   }
 
   const failedGames: number[] = []
@@ -54,7 +57,7 @@ export const startGatheringInformation = async () => {
           }
 
           if (index + 1 === dataArray.length) {
-            await inputMonthlyStatistics(gatheredInformation)
+            await upsertMonthlyTable(gatheredInformation, tableToUpsert)
             console.log(red('Failed Games: '), failedGames)
             console.log(green('Finished gathering information'))
           }

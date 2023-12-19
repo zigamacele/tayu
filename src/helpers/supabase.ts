@@ -1,7 +1,6 @@
 import config from '../config/envVariables'
 import supabase from '../config/supabaseClient'
 import { Gacha, GameSchema } from '../types/supabase'
-import { getCurrentTable } from '../utils/timeDate'
 
 export const getGachaGames = async () => {
   const { data, error } = await supabase
@@ -15,18 +14,18 @@ export const getGachaGames = async () => {
   return data as GameSchema[] | undefined
 }
 
-// TODO lol.. who named this function
-export const inputMonthlyStatistics = async (data: Gacha[]) => {
+export const upsertMonthlyTable = async (
+  data: Gacha[],
+  tableToUpsert: string,
+) => {
   const { error } = await supabase
-    .from(getCurrentTable())
+    .from(tableToUpsert)
     .upsert(data, { onConflict: 'id' })
 
   if (error) console.error('ERROR: ', error)
 }
 
-export const checkTablePerms = async (currentTable: boolean, table: string) => {
-  const tableToTest = currentTable ? getCurrentTable() : table
-
+export const checkTablePerms = async (tableToUpsert: string) => {
   const testData = {
     id: 1, // Genshin Impact
     totalRevenue: 1,
@@ -38,11 +37,11 @@ export const checkTablePerms = async (currentTable: boolean, table: string) => {
   }
 
   const { error: errorUpsert } = await supabase
-    .from(tableToTest)
+    .from(tableToUpsert)
     .upsert(testData, { onConflict: 'id' })
 
   const { error: errorDelete } = await supabase
-    .from(tableToTest)
+    .from(tableToUpsert)
     .delete()
     .eq('id', testData.id)
 
