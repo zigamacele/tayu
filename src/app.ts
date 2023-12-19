@@ -1,9 +1,9 @@
 import { startGatheringInformation } from './logic/configuration'
 import { displayTitle } from './utils/display'
 
-const main = () => {
+const app = () => {
   displayTitle()
   void startGatheringInformation()
 }
 
-void main()
+app()
