@@ -4,6 +4,7 @@ import config from '../config/envVariables'
 import { dim, green, red } from '../styles/chalk'
 import { Gacha } from '../types/supabase'
 import { formatStats, greenTextParenthesis } from '../utils/format'
+import { formatCurrency } from './../utils/format'
 
 export const getMonthlyStatistics = async (
   name: string,
@@ -76,7 +77,11 @@ export const getMonthlyStatistics = async (
       }
     }
 
-    console.log(dim(currentGacha.id), green(name))
+    console.log(
+      dim(currentGacha.id),
+      green(name),
+      `(${dim(formatCurrency(currentGacha.totalRevenue))})`,
+    )
 
     return { status: 'success', gameId: id, game: currentGacha }
   } catch {
