@@ -7,6 +7,7 @@ export const getGachaGames = async () => {
     .from(config.database.GAMES_TABLE)
     .select('*')
     .neq('eos', true)
+    .neq('region', 'CHINA')
     .order('id', { ascending: true })
 
   if (error) console.log(error)

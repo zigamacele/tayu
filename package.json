@@ -4,7 +4,7 @@
   "author": "Ziga Macele",
   "license": "MIT",
   "scripts": {
-    "dev": "clear && tsx ./src/app.ts",
+    "dev": "clear && npx vite-node ./src/app.ts",
     "build": "tsc",
     "start": "node ./dist/app.js",
     "lint": "eslint --fix --quiet src/**/*.ts",
@@ -18,6 +18,7 @@
     "puppeteer": "^20.8.3"
   },
   "devDependencies": {
+    "vite-node": "^1.2.2",
     "@types/inquirer": "^9.0.7",
     "@types/node": "^20.4.2",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
@@ -27,7 +28,6 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "prettier": "3.0.0",
-    "tsx": "^4.6.2",
     "typescript": "^5.1.6",
     "typescript-eslint-parser": "^22.0.0"
   }
