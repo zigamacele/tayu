@@ -44,12 +44,7 @@ export const startGatheringInformation = async () => {
     for (const [index, game] of dataArray.entries()) {
       setTimeout(
         async () => {
-          const monthlyStats = await getMonthlyStatistics(
-            game.name,
-            game.id,
-            game.same_name,
-            game.same_slot,
-          )
+          const monthlyStats = await getMonthlyStatistics(game)
           if (monthlyStats.status === 'error') {
             failedGames.push(monthlyStats.gameId)
           } else {

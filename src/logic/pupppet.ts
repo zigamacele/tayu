@@ -2,16 +2,17 @@ import puppeteer from 'puppeteer'
 
 import config from '../config/envVariables'
 import { dim, green, red } from '../styles/chalk'
-import { Gacha } from '../types/supabase'
+import { Gacha, GameSchema } from '../types/supabase'
 import { formatStats, greenTextParenthesis } from '../utils/format'
 import { formatCurrency } from './../utils/format'
 
-export const getMonthlyStatistics = async (
-  name: string,
-  id: number,
-  same_name: boolean,
-  slot: number[] | null,
-) => {
+export const getMonthlyStatistics = async ({
+  name,
+  id,
+  same_name,
+  same_slot: slot,
+  region,
+}: GameSchema) => {
   const browser = await puppeteer.launch({ headless: 'new' })
   const page = await browser.newPage()
 
@@ -41,7 +42,8 @@ export const getMonthlyStatistics = async (
     const elements = await page.$$(searchResultSelector)
 
     // TODO this needs to be reworked
-    const diffRegionSameName = same_name ? 6 : 2
+
+    const diffRegionSameName = same_name ? 6 : region === 'CHINA' ? 1 : 2
     for (let i = 0; i < diffRegionSameName; i++) {
       if (same_name && slot && !slot.includes(i)) continue
 
