@@ -4,7 +4,7 @@ import config from '../config/envVariables'
 import { dim, green, red } from '../styles/chalk'
 import { Gacha, GameSchema } from '../types/supabase'
 import { formatStats, greenTextParenthesis } from '../utils/format'
-import { formatCurrency } from './../utils/format'
+import { formatCurrency } from '../utils/format'
 
 export const getMonthlyStatistics = async ({
   name,
@@ -13,15 +13,26 @@ export const getMonthlyStatistics = async ({
   same_slot: slot,
   region,
 }: GameSchema) => {
-  const browser = await puppeteer.launch({ headless: 'new' })
+  const browser = await puppeteer.launch({ headless: false })
   const page = await browser.newPage()
-
-  process.env && (await page.goto(config.website['URL']))
 
   await page.setViewport({
     width: 640,
     height: 480,
   })
+
+  process.env && (await page.goto(config.website['URL']))
+
+  const dialogElement = await page.$('.DialogEspecial-module__wrap--pMWQc')
+
+  if (dialogElement) {
+    const presentationSelector = '[role="presentation"]'
+    await page.evaluate(
+      (selector) =>
+        document.querySelectorAll(selector).forEach((el) => el.remove()),
+      presentationSelector,
+    )
+  }
 
   await page.type('.MuiInputBase-input', name)
 
@@ -86,7 +97,8 @@ export const getMonthlyStatistics = async ({
     )
 
     return { status: 'success', gameId: id, game: currentGacha }
-  } catch {
+  } catch (error) {
+    console.log(error)
     console.log(red('Error:'), name, greenTextParenthesis(id))
 
     return { status: 'error', gameId: id }
