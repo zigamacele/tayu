@@ -13,7 +13,7 @@ export const getMonthlyStatistics = async ({
   same_slot: slot,
   region,
 }: GameSchema) => {
-  const browser = await puppeteer.launch({ headless: false })
+  const browser = await puppeteer.launch({ headless: 'new' })
   const page = await browser.newPage()
 
   await page.setViewport({
